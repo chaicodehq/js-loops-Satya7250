@@ -46,4 +46,159 @@
  */
 export function railwayReservation(passengers, trains) {
   // Your code here
+  if (
+    !Array.isArray(passengers) ||
+    passengers.length == 0 ||
+    !Array.isArray(trains) ||
+    trains.length == 0
+  ) {
+    return [];
+  }
+  let finalList = [];
+  for (const each of passengers) {
+    let check = false;
+    for (const train of trains) {
+      if (each.trainNumber === train.trainNumber) {
+        let { name, trainNumber, preferred, fallback } = each;
+        let preferredCheck = false;
+        switch (preferred) {
+          case "sleeper":
+            if (train.seats.sleeper > 0) {
+              finalList.push({
+                name,
+                trainNumber,
+                class: "sleeper",
+                status: "confirmed",
+              });
+              train.seats.sleeper--;
+              preferredCheck = true;
+            }
+            break;
+          case "ac3":
+            if (train.seats.ac3 > 0) {
+              finalList.push({
+                name,
+                trainNumber,
+                class: "ac3",
+                status: "confirmed",
+              });
+              train.seats.ac3--;
+              preferredCheck = true;
+            }
+            break;
+          case "ac2":
+            if (train.seats.ac2 > 0) {
+              finalList.push({
+                name,
+                trainNumber,
+                class: "ac2",
+                status: "confirmed",
+              });
+              train.seats.ac2--;
+              preferredCheck = true;
+            }
+            break;
+          case "ac1":
+            if (train.seats.ac1 > 0) {
+              finalList.push({
+                name,
+                trainNumber,
+                class: "ac1",
+                status: "confirmed",
+              });
+              train.seats.ac1--;
+              preferredCheck = true;
+            }
+            break;
+        }
+        if (preferredCheck === false) {
+          switch (fallback) {
+            case "sleeper":
+              if (train.seats.sleeper > 0) {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: "sleeper",
+                  status: "confirmed",
+                });
+                train.seats.sleeper--;
+              } else {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: preferred,
+                  status: "waitlisted",
+                });
+              }
+              break;
+            case "ac3":
+              if (train.seats.ac3 > 0) {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: "ac3",
+                  status: "confirmed",
+                });
+                train.seats.ac3--;
+              } else {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: preferred,
+                  status: "waitlisted",
+                });
+              }
+              break;
+            case "ac2":
+              if (train.seats.ac2 > 0) {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: "ac2",
+                  status: "confirmed",
+                });
+                train.seats.ac2--;
+              } else {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: preferred,
+                  status: "waitlisted",
+                });
+              }
+              break;
+            case "ac1":
+              if (train.seats.ac1 > 0) {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: "ac1",
+                  status: "confirmed",
+                });
+                train.seats.ac1--;
+              } else {
+                finalList.push({
+                  name,
+                  trainNumber,
+                  class: preferred,
+                  status: "waitlisted",
+                });
+              }
+              break;
+          }
+        }
+        check = true;
+        break;
+      }
+    }
+    if (check === false) {
+      finalList.push({
+        name: each.name,
+        trainNumber: each.trainNumber,
+        class: null,
+        status: "train_not_found",
+      });
+    }
+  }
+  return finalList;
 }

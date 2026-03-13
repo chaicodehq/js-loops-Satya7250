@@ -37,4 +37,38 @@
  */
 export function rangoli(n) {
   // Your code here
+   if (!Number.isInteger(n) || n<=0) {
+    return [];
+  }
+  let pattern=[];
+    for (let i = 0; i <n; i++) {
+      let each="";
+      for (let k = 0; k < n-i-1; k++) {
+        each+=" ";
+      }
+      for (let j = 0; j < i+1; j++) {
+        if (j==i) {
+          each+="*";
+        }else{
+        each+="* ";
+        }
+      }
+      pattern.push(each);
+    }
+    for (let i = 0; i < n; i++) {
+      if (i==0) continue;
+      let each="";
+      for (let j = 0; j < i; j++) {
+        each+=" ";
+      }
+      for (let k = 0; k < n-i; k++) {
+        if (k==(n-i-1)) {
+          each+="*";
+        }else{
+        each+="* ";
+        }
+      }
+      pattern.push(each);
+    }
+  return pattern;
 }

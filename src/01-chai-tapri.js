@@ -28,4 +28,10 @@
  */
 export function chaiTapriRevenue(customers) {
   // Your code here
+  if(typeof customers === "string" || customers<=0 || !Number.isInteger(customers)){
+    return {totalChai: 0, totalRevenue: 0};
+  }
+  const adrakCount = Math.floor(customers / 3);
+  const totalRevenue = ((adrakCount*15) + ((customers-adrakCount)*10));
+  return {totalChai: customers, totalRevenue: totalRevenue};
 }
